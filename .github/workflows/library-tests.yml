@@ -28,10 +28,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
-      # Temporary delay for the cancellation demonstration; removed next commit.
-      - name: Temporary cancellation demonstration
-        run: sleep 120
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
