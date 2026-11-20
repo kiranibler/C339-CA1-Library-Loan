@@ -1,9 +1,23 @@
 name: Library Loans Pytest
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    # Run for changes that can affect this project's tests or test environment.
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "requirements.txt"
+      - "pytest.ini"
+      - ".github/workflows/library-tests.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+# Test the latest revision instead of completing an outdated run on this branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   tests:
@@ -13,6 +27,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
+
+      # Temporary delay for the cancellation demonstration; removed next commit.
+      - name: Temporary cancellation demonstration
+        run: sleep 45
 
       - name: Set up Python
         uses: actions/setup-python@v6
